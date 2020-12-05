@@ -17,8 +17,8 @@ class UserRepository implements UserInterface
 	/**
 	 * Update user password 
 	 *
-	 * @var    App\Models\User $user 
-	 * @var    string          $pass 
+	 * @param    App\Models\User $user 
+	 * @param    string  $pass 
 	 * @return void
 	 */
 	private function updatePassword(User $user, $pass)

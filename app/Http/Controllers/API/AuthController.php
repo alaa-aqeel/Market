@@ -67,7 +67,7 @@ class AuthController extends Controller
             return response()->json([
             	"error"   => 401,
             	"message" => __("error.login") 
-            ]);
+            ], 401);
         }
 
         // Create access token 
