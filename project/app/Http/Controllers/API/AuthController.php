@@ -44,7 +44,7 @@ class AuthController extends Controller
     }
 
  	/**
- 	 * Login user 
+ 	 * Login user by email|phone and Password
  	 *
  	 * @param  Illuminate\Http\Request $request 
  	 * @return Illuminate\Http\Response
@@ -62,7 +62,7 @@ class AuthController extends Controller
         if (!auth()->attempt([
                     $field     => $request->username, 
                     'password' => $request->password  
-                ])) 
+                ]))
         {
             return response()->json([
             	"error"   => 401,

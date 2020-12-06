@@ -1,0 +1,18 @@
+{
+    "name": "FriMK",
+    "short_name": "FriMK",
+    "icons": [
+        {
+            "src": "/favicon.ico",
+            "type": "image/ico"
+        }
+    ],
+    "start_url": "/",
+    "scope": ".",
+    "display": "standalone",
+    "background_color": "#fff",
+    "theme_color": "#000",
+    "description": "Friday Market",
+    "dir": "rtl",
+    "lang": "ar-IQ"
+}
