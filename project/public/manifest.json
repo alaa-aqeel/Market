@@ -1,10 +1,10 @@
 {
-    "name": "FriMK",
-    "short_name": "FriMK",
+    "name": "Market ME",
+    "short_name": "Market",
     "icons": [
         {
-            "src": "/favicon.ico",
-            "type": "image/ico"
+            "src": "favicon.ico",
+            "type": "icon/ico"
         }
     ],
     "start_url": "/",
@@ -12,7 +12,7 @@
     "display": "standalone",
     "background_color": "#fff",
     "theme_color": "#000",
-    "description": "Friday Market",
+    "description": "You favorite recipe app",
     "dir": "rtl",
-    "lang": "ar-IQ"
+    "lang": "ar-US"
 }

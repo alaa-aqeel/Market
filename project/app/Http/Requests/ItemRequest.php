@@ -39,6 +39,7 @@ class ItemRequest extends FormRequest
                     'short_descrip' => "string|required",
                     'discount' => "string|nullable",
                     'description' => "string|nullable",
+                    'tags'     => "string|required",
                     'images'   => 'required',
                     'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg',
                 ];
@@ -53,6 +54,7 @@ class ItemRequest extends FormRequest
                     'short_descrip' => "string",
                     'discount' => "string|nullable",
                     'description' => "string|nullable",
+                    'tags'     => "string",
                     'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg',
                 ];
             }

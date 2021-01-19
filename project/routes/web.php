@@ -15,7 +15,7 @@ use App\Http\Controllers\SPAController;
 */
 
 
-Auth::routes();
+// Auth::routes();
 
 Route::get('/{any}', [SPAController::class, 'index'])->where('any', '.*');
 

@@ -35,6 +35,14 @@ class Item extends Model
     ];
 
     /**
+     * The tags that belong to the item.
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(Tags::class, 'tag_item', 'item_id', 'tag_id');
+    }
+
+    /**
      * Get the user that owns the item.
      *
      */

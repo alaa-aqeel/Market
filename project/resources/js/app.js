@@ -4,29 +4,42 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+// require('./bootstrap');
 
-window.Vue = require('vue');
+import Vue from 'vue';
+import router from "@/router.js";
+import vuetify from "@/plugns/vuetify.js";
+import prototype from "@/prototype.js";
+import store from "@/store.js";
 
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
 
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+Vue.config.productionTip = false;
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.use(prototype);
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+const App = () => import("@/App.vue");
 
 const app = new Vue({
+    components: {
+        App
+    },
     el: '#app',
+    router,
+    vuetify,
+    store,
+    data(){
+        return {
+
+            loading: true
+        }
+    },
+    mounted() {
+        // load token
+        if (localStorage.getItem('user-token', false)){
+
+            store.dispatch('loadToken')
+            store.dispatch('user')
+        }  
+        this.loading = false
+    },
 });

@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use App\Models\Tags;
 class ItemResource extends JsonResource
 {
     /**
@@ -20,10 +20,11 @@ class ItemResource extends JsonResource
             "title" => $this->title,
             'price' => $this->price,
             'short_descrip' => $this->short_descrip,
-            'discount' => $this->discount,
-            'description' => $this->description,
+            'discount'      => $this->discount,
+            'description'   => $this->description,
             'images' => $this->images,
-            'owner'  => $this->user ? $this->user : $this->guest
+            'owner'  => $this->user ? $this->user : $this->guest,
+            'tags'   => $this->tags
         ];
     }
 }

@@ -53,16 +53,12 @@ class ItemRepository implements ItemInterface
 	 */	
 	private function uploadImages(Item $item, $images)
 	{
-		if ($images){
-			foreach ($images as $image) {
+		foreach ($images as $image) {
 
-            	$path = $image->store('public');
-	            $image = Images::create([
-	                'name'  => preg_replace("/public/", '', $path )
-	            ]);
-
-	            $item->images()->save($image);
-	        }
+			$path = $image->store('public');
+			$image = $item->images()->create([
+					'name'  => preg_replace("/public/", '', $path )
+				]);
 		}	
 	}
 
@@ -75,7 +71,7 @@ class ItemRepository implements ItemInterface
 	{
 		return $this->item->with([
 				"images"=> function($query){
-					$query->select("name");
+					$query->select('id', "name", "item_id");
 				},
 				'user'=> function($query){
 					
@@ -83,6 +79,9 @@ class ItemRepository implements ItemInterface
 				},
 				'guest' => function($query){
 					$query->select('id', "name", 'phone');
+				},
+				'tags' => function($query){
+					$query->select('id', "name");
 				}
 			]);
 	}
@@ -114,7 +113,8 @@ class ItemRepository implements ItemInterface
 	public function filter($query)
 	{
 		return $this->items()
-				->where('title', 'like', "%$query%");
+				->where('title', 'like', "%$query%")
+				->orderBy("created_at", 'desc');
 	}
 
 	/**
@@ -124,8 +124,9 @@ class ItemRepository implements ItemInterface
 	 * @return App\Models\Item
 	 */
 	public function create(ItemRequest $request)
-	{
+	{	
 		$item = Item::create($request->validated());
+		$item->tags()->toggle(explode(",", $request->tags));
 		$this->setUserOrGuest($item, $request);
 		$this->uploadImages($item, $request->images);
 
@@ -143,7 +144,7 @@ class ItemRepository implements ItemInterface
 	{
 		$item = $this->getOrfail($id);
 		$item->update($request->validated());
-		$item->images()->delete();
+		// $item->images()->delete();
 		$this->uploadImages($item, $request->images);
 
 		return $this->items()->find($item->id);

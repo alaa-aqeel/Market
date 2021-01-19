@@ -26,6 +26,20 @@ Route::post("login", [AuthController::class, 'login'])
 		->name("login")
 		->middleware("guest");
 
+
+# AUTH		
+Route::group(["middleware"=> ["auth:api"], "prefix" => "user"],function(){
+	
+	Route::get("profile",[ProfileController::class, "index"]);
+	Route::put("profile",[ProfileController::class, "update"]);
+	Route::apiResource("items", "API\ItemUserController");
+	Route::post('logout', function () {
+		
+		\Auth::user()->token()->revoke();
+		return response()->json(['message' => __("success.logout")]);
+	});
+});
+
 # Admin 
 Route::group(["middleware"=> ["auth:api", "role:admin"], "prefix" => "admin"], function(){
 
@@ -33,14 +47,6 @@ Route::group(["middleware"=> ["auth:api", "role:admin"], "prefix" => "admin"], f
 	Route::apiResource("items", "API\Admin\ItemController");
 });
 
-# User 
-Route::group(["middleware"=> ["auth:api", "role:user"], "prefix" => "user"],function(){
-
-	Route::get("profile",[ProfileController::class, "index"]);
-	Route::put("profile",[ProfileController::class, "update"]);
-	Route::apiResource("items", "API\ItemUserController");
-});
-
 Route::apiResource("items", "API\Admin\ItemController")
-			->only("store", "index", "show")
+			->only(["store", "index", "show"])
 			->middleware("guest");

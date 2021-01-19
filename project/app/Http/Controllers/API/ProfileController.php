@@ -44,8 +44,9 @@ class ProfileController extends Controller
      */
  	public function update(UserRequest $request)
  	{
- 		$user = $this->user->update($request, auth()->user()->id);
 
+        $user = $this->user->update($request, auth()->user()->id);
+         
  		return response()->json([
  			'message' => __("success.update"),
  			'data'   => new UserResource($user)

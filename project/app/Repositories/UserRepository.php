@@ -53,7 +53,7 @@ class UserRepository implements UserInterface
 	 */
 	public function get($id)
 	{
-		return $this->all()->find($id);
+		return User::find($id);
 	}
 
 	/**

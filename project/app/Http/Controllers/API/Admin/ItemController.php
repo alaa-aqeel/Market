@@ -8,6 +8,8 @@ use App\Interfaces\ItemInterface;
 use App\Http\Resources\ItemResource;
 use App\Http\Requests\ItemRequest;
 use App\Models\Item;
+use App\Models\Tags;
+
 
 class ItemController extends Controller
 {
@@ -36,9 +38,19 @@ class ItemController extends Controller
      */
     public function index(Request $request)
     {
-        $items = $this->item->filter($request->q)->paginate();
+        $items = $this->item->filter($request->q);
+
+        if ( $request->tags ){
+            $items = $items->whereHas('tags', function($q) use($request) {
+                
+                $q->whereIn('id', $request->tags);
+            });
+        }
         
-        return ItemResource::collection($items);
+                
+        return ItemResource::collection($items->paginate())->additional([
+                    'tags' => Tags::select("name", 'id')->get()
+                ]);
     }
 
     /**

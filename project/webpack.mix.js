@@ -1,5 +1,7 @@
 const mix = require('laravel-mix');
 
+require('dotenv').config();
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -11,13 +13,19 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
-
 mix.webpackConfig({
     resolve: {
         alias: {
-          '@': __dirname + '/resources/assets/js'
-        },
-    },
+            '@': path.resolve(__dirname, 'resources/js/'),
+            '@forms': path.resolve(__dirname, 'resources/js/components/forms'),
+        }
+    }
 });
+mix.babelConfig({
+    plugins: ['@babel/plugin-syntax-dynamic-import'],
+});
+
+mix.js('resources/js/app.js', 'public/js')
+    // .sass('resources/sass/app.scss', 'public/css')
+    .extract();
+

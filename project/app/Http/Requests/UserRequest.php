@@ -44,13 +44,12 @@ class UserRequest extends FormRequest
             case 'PUT':
             case 'PATCH':
             {
-                $userid = $this->route()->parameter('user');
+                $userid = $this->route()->parameter('user') || auth()->user()->id;
                 return [   
                         'name'  => "string",
                         'phone' => "between:11,12|unique:users,phone,".$userid,
                         'email' => "email|unique:users,email,".$userid,
-
-                        'password' => "between:8,45",
+                        // 'password' => "nullable|between:8,45",
                         'fb_page'  => 'string|nullable'
                     ];
             }
